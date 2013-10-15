@@ -12,7 +12,7 @@ public class WWWJsonTest : MonoBehaviour
     private string FILE_PATH;
 	
 	public void OnEnable () {
-		URL = "http://www.sayduck.com";
+		URL = "https://dl.dropboxusercontent.com/u/14181582/_temp/unitywebview/ExampleApp.html";
 		System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/sayduck");
 		FILE_PATH = Application.persistentDataPath + "/sayduck/filename.html";
 	}
@@ -75,44 +75,6 @@ public class WWWJsonTest : MonoBehaviour
             SaveToDocuments(request.text, "filename.html", "sayduck/");
         }
     }
-	
-	/*
-    private string ReadContents()
-    {
-        string ret;
-
-        using(FileStream fs = new FileStream(FILE_PATH, FileMode.Open))
-        {
-            BinaryReader fileReader = new BinaryReader(fs);
-
-            ret = fileReader.ReadString();
-
-            fs.Close();
-        }
-
-        return ret;
-    }
-
-    private void SaveContents(string text)
-    {
-        using(FileStream fs = new FileStream(FILE_PATH, FileMode.Create))
-        {
-            BinaryWriter fileWriter = new BinaryWriter(fs);
-
-            fileWriter.Write(text);
-
-            fs.Close();
-			
-			Debug.Log ("SaveContents ... Close");
-        }
-		
-		Debug.Log ("Read file");
-		Debug.Log (ReadContents());
-    }
-	
-	
-	*/
-	
 	
 	void SaveToDocuments(string savedData, string fileName, string directory = "")
 	{

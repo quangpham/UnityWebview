@@ -102,6 +102,8 @@ extern "C" void UnitySendMessage(const char *, const char *, const char *);
 - (void)_flushMessageQueue {
     NSString *messageQueueString = [webView stringByEvaluatingJavaScriptFromString:@"WebViewJavascriptBridge._fetchQueue();"];
     NSLog(@"Log message %@", messageQueueString);
+    
+    UnitySendMessage([gameObjectName UTF8String], "CallFromJS", [messageQueueString UTF8String]);
 }
 /*
  - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -127,7 +129,7 @@ extern "C" void UnitySendMessage(const char *, const char *, const char *);
      */
     [webView stringByEvaluatingJavaScriptFromString:@"document.open();document.close()"];
 	NSString *currentURL = [NSString stringWithUTF8String:url];
-	NSURL *nsurl = [NSURL URLWithString:@"https://dl.dropboxusercontent.com/u/14181582/_temp/unitywebview/ExampleApp.html"];
+	NSURL *nsurl = [NSURL URLWithString:currentURL];
 	NSURLRequest *request = [NSURLRequest requestWithURL:nsurl];
 	[webView loadRequest:request];
 }
