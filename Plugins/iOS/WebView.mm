@@ -80,13 +80,28 @@ extern "C" void UnitySendMessage(const char *, const char *, const char *);
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-	NSString *url = [[request URL] absoluteString];
-	if ([url hasPrefix:@"unity:"]) {
-		UnitySendMessage([gameObjectName UTF8String], "CallFromJS", [[url substringFromIndex:6] UTF8String]);
-		return NO;
-	} else {
-		return YES;
-	}
+	/*
+     NSString *url = [[request URL] absoluteString];
+     if ([url hasPrefix:@"unity:"]) {
+     UnitySendMessage([gameObjectName UTF8String], "CallFromJS", [[url substringFromIndex:6] UTF8String]);
+     return NO;
+     } else {
+     return YES;
+     }*/
+    NSURL *url = [request URL];
+    if ([[url scheme] isEqualToString:@"wvjbscheme"]) {
+        if ([[url host] isEqualToString:@"__WVJB_QUEUE_MESSAGE__"]) {
+            [self _flushMessageQueue];
+        } else {
+            NSLog(@"WebViewJavascriptBridge: WARNING: Received unknown WebViewJavascriptBridge command %@://%@", @"wvjbscheme", [url path]);
+        }
+        return NO;
+    }
+}
+
+- (void)_flushMessageQueue {
+    NSString *messageQueueString = [webView stringByEvaluatingJavaScriptFromString:@"WebViewJavascriptBridge._fetchQueue();"];
+    NSLog(@"Log message %@", messageQueueString);
 }
 /*
  - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -112,7 +127,7 @@ extern "C" void UnitySendMessage(const char *, const char *, const char *);
      */
     [webView stringByEvaluatingJavaScriptFromString:@"document.open();document.close()"];
 	NSString *currentURL = [NSString stringWithUTF8String:url];
-	NSURL *nsurl = [NSURL URLWithString:currentURL];
+	NSURL *nsurl = [NSURL URLWithString:@"https://dl.dropboxusercontent.com/u/14181582/_temp/unitywebview/ExampleApp.html"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:nsurl];
 	[webView loadRequest:request];
 }
