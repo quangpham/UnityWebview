@@ -93,14 +93,14 @@ extern "C" void UnitySendMessage(const char *, const char *, const char *);
         if ([[url host] isEqualToString:@"__WVJB_QUEUE_MESSAGE__"]) {
             [self _flushMessageQueue];
         } else {
-            NSLog(@"WebViewJavascriptBridge: WARNING: Received unknown WebViewJavascriptBridge command %@://%@", @"wvjbscheme", [url path]);
+            NSLog(@"WebViewJsBridge: WARNING: Received unknown WebViewJsBridge command %@://%@", @"wvjbscheme", [url path]);
         }
         return NO;
     }
 }
 
 - (void)_flushMessageQueue {
-    NSString *messageQueueString = [webView stringByEvaluatingJavaScriptFromString:@"WebViewJavascriptBridge._fetchQueue();"];
+    NSString *messageQueueString = [webView stringByEvaluatingJavaScriptFromString:@"WebViewJsBridge._fetchQueue();"];
     NSLog(@"Log message %@", messageQueueString);
     
     UnitySendMessage([gameObjectName UTF8String], "CallFromJS", [messageQueueString UTF8String]);

@@ -12,9 +12,8 @@ public class WWWJsonTest : MonoBehaviour
     private string FILE_PATH;
 	
 	public void OnEnable () {
-		URL = "https://dl.dropboxusercontent.com/u/14181582/_temp/unitywebview/ExampleApp.html";
+		URL = "https://dl.dropboxusercontent.com/u/14181582/_temp/bin/index.html";
 		System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/sayduck");
-		FILE_PATH = Application.persistentDataPath + "/sayduck/filename.html";
 	}
 	
 	public void Start () {
@@ -23,9 +22,6 @@ public class WWWJsonTest : MonoBehaviour
 
     public void DownloadAndSave()
     {
-		Debug.Log ("Save file in :" + FILE_PATH);
-		Debug.Log ("Download from :"+ URL);
-		
         StartCoroutine(DownloadCoroutine());
     }
 
@@ -37,7 +33,6 @@ public class WWWJsonTest : MonoBehaviour
 
     private IEnumerator DownloadCoroutine()
     {
-		Debug.Log ( "in DownloadCoroutine ..." );
         var requestHeaders = new Hashtable()
         {
 			/*
@@ -72,7 +67,7 @@ public class WWWJsonTest : MonoBehaviour
 			
 			Debug.Log (request.text);
 			
-            SaveToDocuments(request.text, "filename.html", "sayduck/");
+            SaveToDocuments(request.text, "index.html", "sayduck/");
         }
     }
 	
